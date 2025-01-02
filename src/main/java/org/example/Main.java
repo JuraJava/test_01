@@ -2,10 +2,7 @@ package org.example;
 
 import com.mysql.cj.jdbc.Driver;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class Main {
@@ -13,7 +10,12 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Введите id автомобиля:");
-        String carId = new Scanner(System.in).nextLine();
+//        String carId = new Scanner(System.in).nextLine();
+        int carId = Integer.parseInt(new Scanner(System.in).nextLine());
+        // Эту строку вместо закомментированной сверху мы используем чтобы
+        // избежать SQL инъекций, когда там будут писать OR (строку) - программа не сработает
+        System.out.println("Введите марку автомобиля:");
+        String nameCar = (new Scanner(System.in).nextLine()).trim();
 
         Class<Driver> driverClass = Driver.class;
 
@@ -29,17 +31,22 @@ public class Main {
         String str4 = "UPDATE cars SET speed=333.0 " +
                 "WHERE id IN (4, 5, 6)";
 //        String str5 = "SELECT id, speed, name FROM cars WHERE name='BMW'";
-        String str5 = "SELECT id, name, speed FROM cars WHERE id = " + carId;
+//        String str5 = "SELECT id, name, speed FROM cars WHERE id = " + carId;
+        String str5 = "SELECT id, name, speed FROM cars WHERE id = ? OR name = ?";
         String str6 = "INSERT INTO cars (name, speed) VALUES " +
                 "('SUBARU', 777.0);";
         try {
             Connection connection = ConnectionManager.open();
-            Statement statement = connection.createStatement();
+//            Statement statement = connection.createStatement();
+            PreparedStatement preparedStatement = connection.prepareStatement(str5);
 
+            preparedStatement.setInt(1, carId);
+            preparedStatement.setString(2, nameCar);
 //            ResultSet resultSet = statement.executeQuery(str5);
-            statement.execute(str5);
-            ResultSet resultSet = statement.getResultSet();
-
+//            statement.execute(str5);
+            preparedStatement.execute();
+//            ResultSet resultSet = statement.getResultSet();
+            ResultSet resultSet = preparedStatement.getResultSet();
             while (resultSet.next()) {
 //                System.out.print(resultSet.getString(3) + " - ");
 //                System.out.println(resultSet.getDouble("speed"));
@@ -50,7 +57,6 @@ public class Main {
 // Этот цикл используется для того чтобы выбираемые из таблицы данные отображались понятно
 
 //            System.out.println(resultSet);
-
 //            statement.executeUpdate(str1);
 //            statement.executeUpdate(str2);
 //            int temp1 = statement.executeUpdate(str3);
