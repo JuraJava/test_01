@@ -1,4 +1,6 @@
-package org.example;
+package util;
+
+import main.PropertiesUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,5 +30,9 @@ public class ConnectionManager {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Connection get() {
+        return open();
     }
 }

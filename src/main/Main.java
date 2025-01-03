@@ -1,9 +1,9 @@
-package org.example;
+package main;
 
 import com.mysql.cj.jdbc.Driver;
+import util.ConnectionManager;
 
 import java.sql.*;
-import java.util.Scanner;
 
 public class Main {
 
