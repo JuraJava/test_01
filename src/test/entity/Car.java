@@ -1,4 +1,4 @@
-package entity;
+package test.entity;
 
 public class Car {
 

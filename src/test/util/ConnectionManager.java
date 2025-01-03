@@ -1,6 +1,6 @@
-package util;
+package test.util;
 
-import main.PropertiesUtil;
+import test.PropertiesUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

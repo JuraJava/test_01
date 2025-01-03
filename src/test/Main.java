@@ -1,7 +1,7 @@
-package main;
+package test;
 
 import com.mysql.cj.jdbc.Driver;
-import util.ConnectionManager;
+import test.util.ConnectionManager;
 
 import java.sql.*;
 

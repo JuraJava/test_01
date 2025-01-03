@@ -1,7 +1,7 @@
-package dao;
+package test.dao;
 
 import java.sql.Connection;
-import util.ConnectionManager;
+import test.util.ConnectionManager;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ public class CarDao {
     // Конструктор созаём приватным чтобы никто не смог
     // создать экземпляр класса
 
-    public static void addNewCar(int id, String name, double speed) throws SQLException {
+    public  void addNewCar(int id, String name, double speed) throws SQLException {
         Connection connection = ConnectionManager.get();
         PreparedStatement preparedStatement = connection.prepareStatement(ADD_NEW_CAR_SQL);
         preparedStatement.setInt(1, id);
@@ -29,7 +29,7 @@ public class CarDao {
         preparedStatement.executeUpdate();
     }
 
-    public static void delete(int id) throws SQLException {
+    public  void delete(int id) throws SQLException {
         Connection connection = ConnectionManager.get();
         PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL);
         preparedStatement.setInt(1, id);
