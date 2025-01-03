@@ -9,9 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Введите id автомобиля:");
-//        String carId = new Scanner(System.in).nextLine();
-        int carId = Integer.parseInt(new Scanner(System.in).nextLine());
+//        System.out.println("Введите id автомобиля:");
+////        String carId = new Scanner(System.in).nextLine();
+//        int carId = Integer.parseInt(new Scanner(System.in).nextLine());
         // Эту строку вместо закомментированной сверху мы используем чтобы
         // избежать SQL инъекций, когда там будут писать OR (строку) - программа не сработает
 //        System.out.println("Введите марку автомобиля:");
@@ -36,34 +36,46 @@ public class Main {
         String str5 = "SELECT id, name, speed FROM cars WHERE id >= ?";
         String str6 = "INSERT INTO cars (name, speed) VALUES " +
                 "('SUBARU', 777.0);";
+        String str7 = "DELETE FROM cars WHERE id = 3";
+        String str8 = "DELETE FROM cars WHERE id = 5";
+        String str9 = "DELETE FROM cars WHERE id = 6";
+
         try {
             Connection connection = ConnectionManager.open();
 //            Statement statement = connection.createStatement();
-            PreparedStatement preparedStatement = connection.prepareStatement(str5);
+//            PreparedStatement preparedStatement = connection.prepareStatement(str5);
+            Statement statement = connection.createStatement();
 
-            preparedStatement.setInt(1, carId);
+            statement.addBatch(str7);
+            // Этот метод используется для того чтобы добавить то что указано в парамере
+            // в дальнейшее удаление через метод executeBatch()
+            statement.addBatch(str8);
+            statement.addBatch(str9);
 
-//            preparedStatement.setMaxRows(3);
-//  Этот метод нужен чтобы при вводе, например id = 1 мы могли получить столько записей,
-//  сколько указано в параметре метода setMaxRows(3), начиная с того id который мы ввели
-            preparedStatement.setFetchSize(3);
+            statement.executeBatch();
+
+////            preparedStatement.setInt(1, carId);
+////            preparedStatement.setMaxRows(3);
+////  Этот метод нужен чтобы при вводе, например id = 1 мы могли получить столько записей,
+////  сколько указано в параметре метода setMaxRows(3), начиная с того id который мы ввели
+//            preparedStatement.setFetchSize(3);
 // Этот метод используется для того чтобы данные нам выбирались порциями по столько
 // записей, сколько указано в параметре метода setFetchSize(3).
 // Отображаться будут все записи, но выбираться под капотом они будут по столько
 
-//            preparedStatement.setString(2, nameCar);
-//            ResultSet resultSet = statement.executeQuery(str5);
-//            statement.execute(str5);
-            preparedStatement.execute();
+////            preparedStatement.setString(2, nameCar);
+////            ResultSet resultSet = statement.executeQuery(str5);
+////            statement.execute(str5);
+//            preparedStatement.execute();
 //            ResultSet resultSet = statement.getResultSet();
-            ResultSet resultSet = preparedStatement.getResultSet();
-            while (resultSet.next()) {
-//                System.out.print(resultSet.getString(3) + " - ");
+//            ResultSet resultSet = preparedStatement.getResultSet();
+//            while (resultSet.next()) {
+////                System.out.print(resultSet.getString(3) + " - ");
+////                System.out.println(resultSet.getDouble("speed"));
+//                System.out.print(resultSet.getInt("id") + " ");
+//                System.out.print(resultSet.getString("name") + " ");
 //                System.out.println(resultSet.getDouble("speed"));
-                System.out.print(resultSet.getInt("id") + " ");
-                System.out.print(resultSet.getString("name") + " ");
-                System.out.println(resultSet.getDouble("speed"));
-            }
+//            }
 // Этот цикл используется для того чтобы выбираемые из таблицы данные отображались понятно
 
 //            System.out.println(resultSet);
