@@ -4,12 +4,15 @@ public class Car {
 
     private int id;
     private String name;
-    private String speed;
+    private Double speed;
 
-    public Car(int id, String name, String speed) {
+    public Car(int id, String name, Double speed) {
         this.id = id;
         this.name = name;
         this.speed = speed;
+    }
+
+    public Car() {
     }
 
     public int getId() {
@@ -28,11 +31,20 @@ public class Car {
         this.name = name;
     }
 
-    public String getSpeed() {
+    public Double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(String speed) {
+    public void setSpeed(Double speed) {
         this.speed = speed;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", speed='" + speed + '\'' +
+                '}';
     }
 }
